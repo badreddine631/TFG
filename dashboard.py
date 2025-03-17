@@ -68,5 +68,43 @@ else:
 st.subheader("Tabla de Impacto de Eventos")
 st.dataframe(impacto_eventos_df)
 
+# Calcular la volatilidad (desviación estándar) antes y después de cada evento
+volatilidad_eventos = []
+for _, evento in eventos_df.iterrows():
+    fecha_evento = evento['Fecha']
+    print(df.columns)
+    rango_antes = df[(df['Date'] >= fecha_evento - pd.Timedelta(days=7)) & (df['Date'] < fecha_evento)]
+    rango_despues = df[(df['Date'] > fecha_evento) & (df['Date'] <= fecha_evento + pd.Timedelta(days=7))]
+    
+    volatilidad_antes = rango_antes['Close'].pct_change().std() * 100
+    volatilidad_despues = rango_despues['Close'].pct_change().std() * 100
+    
+    volatilidad_eventos.append({
+        'Evento': evento['Evento'],
+        'Fecha': evento['Fecha'],
+        'Volatilidad Antes (%)': volatilidad_antes,
+        'Volatilidad Después (%)': volatilidad_despues,
+        'Categoría': evento['Categoría']
+    })
+
+# Convertir a dataframe
+volatilidad_df = pd.DataFrame(volatilidad_eventos)
+
+# Agregar el gráfico de volatilidad al dashboard
+st.subheader("Volatilidad Antes y Después de los Eventos")
+fig_volatilidad = px.bar(volatilidad_df, 
+                         x='Evento', 
+                         y=['Volatilidad Antes (%)', 'Volatilidad Después (%)'],
+                         barmode='group',
+                         title="Volatilidad Antes y Después de los Eventos",
+                         color_discrete_sequence=['blue', 'red'])
+fig_volatilidad.update_layout(xaxis_title="Evento", yaxis_title="Volatilidad (%)", legend_title="Periodo")
+st.plotly_chart(fig_volatilidad)
+
+# Mostrar la tabla de volatilidades
+st.subheader("Tabla de Volatilidad de Eventos")
+st.dataframe(volatilidad_df)
+
+
 # Nota final
 st.info("Este dashboard permite analizar el impacto de eventos macroeconómicos seleccionados sobre el precio del oro.")
