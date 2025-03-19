@@ -19,14 +19,32 @@ st.set_page_config(
     layout="wide"
 )
 
-# Título y descripción
-st.title("📈 Análisis del Oro y Eventos Macroeconómicos")
+# Función para cargar CSS
+def load_css(css_file):
+    with open(css_file, "r") as f:
+        css = f.read()
+        st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
+
+# Cargar el archivo CSS
+load_css("style.css")
+
+# Mostrar el encabezado con título y botón
 st.markdown("""
-Esta herramienta interactiva permite analizar:
-- **Precio del oro** en un rango de fechas.
-- **Impacto de eventos macroeconómicos** en el precio del oro.
-- **Volatilidad** antes y después de los eventos clave.
-""")
+    <div class="header">
+        <h1>MacroGold Analytics</h1>
+        <button class="get-started-btn">Get Started</button>
+    </div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+    <div class="center-content">
+        <h2>Información basada en datos para los mercados financieros</h2>
+        <p>Aprovecha los datos macroeconómicos y el análisis impulsado por IA para tomar decisiones de inversión más inteligentes.</p>
+        <button class="explore-btn">Explorar Nuestras Soluciones</button>
+    </div>
+""", unsafe_allow_html=True)
+
+
 
 # **Pestañas principales**
 tab_precio, tab_impacto, tab_volatilidad, tab_informe = st.tabs([
