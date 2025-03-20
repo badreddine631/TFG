@@ -1,0 +1,160 @@
+/* Fondo degradado para toda la aplicación */
+body, [data-testid="stAppViewContainer"] {
+    background: linear-gradient(180deg, #ff6600, #1a1a1a); /* Degradado de naranja a negro */
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* Ajustar la barra lateral */
+[data-testid="stSidebar"] {
+    background-color: #232323;
+}
+
+/* Ajuste del encabezado más arriba */
+.header {
+    background-color: #0d1221; /* Fondo negro azulado */
+    padding: 20px 40px;
+    border-bottom: 5px solid #ff6600; /* Línea naranja en la parte inferior */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+
+    position: absolute; /* Mantenerlo en posición relativa al contenido */
+    top: -120px; /* Lo subimos más (antes estaba en 160px) */
+    left: 50%;
+    transform: translateX(-50%); /* Centrar horizontalmente */
+    width: 200%;
+    max-width: 1200px;
+    z-index: 1000;
+}
+
+
+
+/* Ajustar la separación para que el contenido no quede oculto debajo del encabezado */
+[data-testid="stAppViewContainer"] {
+    padding-top: 90px; /* Espacio suficiente para el encabezado */
+}
+
+/* Estilo del título */
+.header h1 {
+    color: #ff6600;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Estilo del botón Get Started */
+.get-started-btn {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.get-started-btn:hover {
+    background-color: #cc5200;
+}
+/* Contenedor del texto central */
+.center-content {
+    text-align: center;
+    padding: 40px 20px; /* Aumenta el padding para mover todo */
+    max-width: 800px;
+    margin: 30px auto 20px auto; /* Ajusta el margen superior para subir o bajar */
+}
+
+
+/* Título principal */
+.center-content h2 {
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Subtítulo */
+.center-content p {
+    color: #f0f0f0;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Botón "Explorar Nuestras Soluciones" */
+.explore-btn {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.explore-btn:hover {
+    background-color: #cc5200;
+}
+<<<<<<< HEAD
+=======
+
+/* Contenedor de los cuadros */
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+/* Estilo de los cuadros clicables */
+.clickable-card {
+    background-color: #0d1221;
+    color: white;
+    padding: 20px;
+    width: 300px;
+    height: 180px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border: 3px solid #ff6600; /* Borde naranja */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.clickable-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.5);
+}
+
+/* Estilo de los títulos */
+.clickable-card h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Estilo del texto dentro del cuadro */
+.clickable-card p {
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Ajuste para que el texto no se deforme */
+@media (max-width: 900px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
+>>>>>>> feature/dashboard-ui
