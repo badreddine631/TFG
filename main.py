@@ -24,7 +24,7 @@ with open("assets/style.css", "r") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Cargar datos
-df, eventos_df = load_data()
+df, eventos_df, dolar_df = load_data()
 
 # Mostrar el encabezado con título y botón
 st.markdown("""
@@ -62,7 +62,7 @@ with col3:
 if st.session_state.current_page == "market_trends":
     market_trends.show(df, eventos_df)
 elif st.session_state.current_page == "data_insights":
-    data_insights.show(df, eventos_df)
+    data_insights.show(df, eventos_df, dolar_df)
 elif st.session_state.current_page == "custom_reports":
     custom_reports.show(df, eventos_df)
 else:
