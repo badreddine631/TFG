@@ -4,6 +4,15 @@ import plotly.express as px
 from fpdf import FPDF
 import os
 
+# Definir una variable de estado para cambiar entre páginas
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "home"
+
+# Función para cambiar de página
+def change_page(page_name):
+    st.session_state.current_page = page_name
+    st.rerun()  # Recargar la interfaz
+
 # Cargar datos
 df = pd.read_csv("C:/Users/Usuario/Desktop/TFFFG/price-gold/XAU_1d_data_2004_to_2024-09-20.csv", parse_dates=["Date"])
 eventos_df = pd.read_csv("C:/Users/Usuario/Desktop/TFFFG/price-gold/eventos_macroeconomicos.csv", parse_dates=["Fecha"])
@@ -44,55 +53,56 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+# Contenedor de cuadros clicables usando columnas de Streamlit
+st.markdown("### Selecciona un análisis:")
+col1, col2, col3 = st.columns(3)
 
+with col1:
+    if st.button("📊 Análisis de Tendencias del Mercado", key="btn_market_trends"):
+        st.session_state.current_page = "market_trends"
+        st.rerun()
 
-# **Pestañas principales**
-tab_precio, tab_impacto, tab_volatilidad, tab_informe = st.tabs([
-    "📊 Precio del Oro",
-    "🌍 Impacto de Eventos",
-    "📉 Volatilidad",
-    "📂 Generar Informe"
-])
+with col2:
+    if st.button("📉 Información Basada en Datos", key="btn_volatility_analysis"):
+        st.session_state.current_page = "data_insights"
+        st.rerun()
 
-# **1. Tab: Precio del Oro**
-with tab_precio:
-    st.sidebar.header("🔍 Filtrar por Fechas")
-    start_date = st.sidebar.date_input("Fecha de Inicio", value=df.index.min(), key="dashboard_fecha_inicio")
-    end_date = st.sidebar.date_input("Fecha de Fin", value=df.index.max(), key="dashboard_fecha_fin")
+with col3:
+    if st.button("📂 Informes Personalizables", key="btn_generate_report"):
+        st.session_state.current_page = "custom_reports"
+        st.rerun()
+
+# Mostrar la página correcta según el estado
+if st.session_state.current_page == "home":
+    st.markdown("<p style='text-align: center;'>Selecciona una opción para ver los análisis.</p>", unsafe_allow_html=True)
+
+elif st.session_state.current_page == "market_trends":
+    st.title("📈 Análisis del Precio del Oro y Eventos Macroeconómicos")
+
+    # Filtrar por fechas
+    start_date = st.sidebar.date_input("Fecha de Inicio", value=df.index.min(), key="precio_fecha_inicio")
+    end_date = st.sidebar.date_input("Fecha de Fin", value=df.index.max(), key="precio_fecha_fin")
     df_filtrado = df[(df.index >= pd.to_datetime(start_date)) & (df.index <= pd.to_datetime(end_date))]
 
+    # Mostrar gráfico del precio del oro
     st.subheader("Evolución del Precio del Oro")
     fig_precio = px.line(df_filtrado, x=df_filtrado.index, y="Close", title="Precio del Oro")
     fig_precio.update_layout(xaxis_title="Fecha", yaxis_title="Precio de Cierre (USD)")
     st.plotly_chart(fig_precio)
 
-# **2. Tab: Impacto de Eventos**
-with tab_impacto:
-    impacto_eventos = []
-    for _, evento in eventos_df.iterrows():
-        fecha_evento = evento['Fecha']
-        rango_antes = df[(df.index >= fecha_evento - pd.Timedelta(days=7)) & (df.index < fecha_evento)]
-        rango_despues = df[(df.index > fecha_evento) & (df.index <= fecha_evento + pd.Timedelta(days=7))]
-        promedio_antes = rango_antes['Close'].mean()
-        promedio_despues = rango_despues['Close'].mean()
-        cambio = ((promedio_despues - promedio_antes) / promedio_antes) * 100
-        impacto_eventos.append({
-            'Evento': evento['Evento'],
-            'Fecha': fecha_evento,
-            'Categoría': evento['Categoría'],
-            'Cambio (%)': cambio
-        })
-    impacto_eventos_df = pd.DataFrame(impacto_eventos)
+    # Mostrar eventos macroeconómicos
+    st.subheader("Eventos Macroeconómicos")
+    st.dataframe(eventos_df)
 
-    st.subheader("Impacto de Eventos Macroeconómicos")
-    fig_eventos = px.bar(impacto_eventos_df, x="Evento", y="Cambio (%)", color="Categoría",
-                         title="Impacto de Eventos", text="Cambio (%)")
-    fig_eventos.update_layout(xaxis_title="Evento", yaxis_title="Cambio Promedio (%)")
-    st.plotly_chart(fig_eventos)
-    st.dataframe(impacto_eventos_df)
+    # Botón para volver atrás
+    if st.button("⬅ Volver al Inicio"):
+        st.session_state.current_page = "home"
+        st.rerun()
 
-# **3. Tab: Volatilidad**
-with tab_volatilidad:
+elif st.session_state.current_page == "data_insights":
+    st.title("📉 Información Basada en Datos")
+
+    # Calcular la volatilidad antes y después de eventos macroeconómicos
     volatilidad_eventos = []
     for _, evento in eventos_df.iterrows():
         fecha_evento = evento['Fecha']
@@ -118,49 +128,54 @@ with tab_volatilidad:
     st.plotly_chart(fig_volatilidad)
     st.dataframe(volatilidad_df)
 
-# **Función para generar el informe en PDF**
-def generar_informe(impacto_eventos_df, volatilidad_df, output_path="informe_analisis.pdf"):
-    pdf = FPDF()
-    pdf.set_auto_page_break(auto=True, margin=15)
-    pdf.add_page()
-    pdf.set_font("Arial", size=12)
+    if st.button("⬅ Volver al Inicio"):
+        st.session_state.current_page = "home"
+        st.rerun()
 
-    # Título del informe
-    pdf.set_font("Arial", style="B", size=16)
-    pdf.cell(200, 10, txt="Informe de Análisis del Oro", ln=True, align="C")
-    pdf.ln(10)
+elif st.session_state.current_page == "custom_reports":
+    st.title("📂 Informes Personalizables")
 
-    # Resumen de resultados
-    pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="1. Impacto de Eventos Macroeconómicos", ln=True)
-    pdf.ln(5)
+    # Generar informe en PDF
+    def generar_informe(impacto_eventos_df, volatilidad_df, output_path="informe_analisis.pdf"):
+        pdf = FPDF()
+        pdf.set_auto_page_break(auto=True, margin=15)
+        pdf.add_page()
+        pdf.set_font("Arial", size=12)
 
-    # Añadir tabla de impacto de eventos
-    for i, row in impacto_eventos_df.iterrows():
-        evento = row['Evento']
-        fecha = row['Fecha'].strftime('%Y-%m-%d')
-        categoria = row['Categoría']
-        cambio = f"{row['Cambio (%)']:.2f}%"
-        pdf.cell(0, 10, txt=f"{evento} ({fecha}) - Categoría: {categoria}, Cambio: {cambio}", ln=True)
+        # Título del informe
+        pdf.set_font("Arial", style="B", size=16)
+        pdf.cell(200, 10, txt="Informe de Análisis del Oro", ln=True, align="C")
+        pdf.ln(10)
 
-    pdf.ln(10)
-    pdf.cell(200, 10, txt="2. Volatilidad Antes y Después de los Eventos", ln=True)
-    pdf.ln(5)
+        # Resumen de resultados
+        pdf.set_font("Arial", size=12)
+        pdf.cell(200, 10, txt="1. Impacto de Eventos Macroeconómicos", ln=True)
+        pdf.ln(5)
 
-    # Añadir tabla de volatilidad
-    for i, row in volatilidad_df.iterrows():
-        evento = row['Evento']
-        fecha = row['Fecha'].strftime('%Y-%m-%d')
-        vol_antes = f"{row['Volatilidad Antes (%)']:.2f}%"
-        vol_despues = f"{row['Volatilidad Después (%)']:.2f}%"
-        pdf.cell(0, 10, txt=f"{evento} ({fecha}) - Volatilidad Antes: {vol_antes}, Después: {vol_despues}", ln=True)
+        # Añadir tabla de impacto de eventos
+        for i, row in impacto_eventos_df.iterrows():
+            evento = row['Evento']
+            fecha = row['Fecha'].strftime('%Y-%m-%d')
+            categoria = row['Categoría']
+            cambio = f"{row['Cambio (%)']:.2f}%"
+            pdf.cell(0, 10, txt=f"{evento} ({fecha}) - Categoría: {categoria}, Cambio: {cambio}", ln=True)
 
-    pdf.output(output_path)
+        pdf.ln(10)
+        pdf.cell(200, 10, txt="2. Volatilidad Antes y Después de los Eventos", ln=True)
+        pdf.ln(5)
 
-# **4. Tab: Generar Informe**
-with tab_informe:
+        # Añadir tabla de volatilidad
+        for i, row in volatilidad_df.iterrows():
+            evento = row['Evento']
+            fecha = row['Fecha'].strftime('%Y-%m-%d')
+            vol_antes = f"{row['Volatilidad Antes (%)']:.2f}%"
+            vol_despues = f"{row['Volatilidad Después (%)']:.2f}%"
+            pdf.cell(0, 10, txt=f"{evento} ({fecha}) - Volatilidad Antes: {vol_antes}, Después: {vol_despues}", ln=True)
+
+        pdf.output(output_path)
+
     if st.button("Generar Informe PDF"):
-        generar_informe(impacto_eventos_df, volatilidad_df)
+        generar_informe(eventos_df, volatilidad_df)
         with open("informe_analisis.pdf", "rb") as file:
             st.download_button(
                 label="Descargar Informe PDF",
@@ -168,3 +183,7 @@ with tab_informe:
                 file_name="informe_analisis.pdf",
                 mime="application/pdf"
             )
+
+    if st.button("⬅ Volver al Inicio"):
+        st.session_state.current_page = "home"
+        st.rerun()
