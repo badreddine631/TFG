@@ -13,7 +13,7 @@ def show(df, eventos_df):
 
     # Mostrar gráfico del precio del oro
     st.subheader("Evolución del Precio del Oro")
-    fig_precio = px.line(df_filtrado, x=df_filtrado.index, y="Close", title="Precio del Oro")
+    fig_precio = px.line(df_filtrado, x=df_filtrado.index, y="Precio_Oro", title="Precio del Oro")
     fig_precio.update_layout(xaxis_title="Fecha", yaxis_title="Precio de Cierre (USD)")
     st.plotly_chart(fig_precio)
 
