@@ -1,0 +1,51 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches
+.ipynb_checkpoints/
+.cache/
+*.log
+
+# Jupyter Notebook Checkpoints
+**/.ipynb_checkpoints
+
+# Environment files
+.env
+.venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Streamlit temporary files
+.streamlit/config.toml
+.streamlit/*.json
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Python Egg
+*.egg
+*.egg-info/
+dist/
+build/
+
+# PDF auto-generado
+informe_analisis.pdf
+
+# Datos temporales
+*.tmp
+*.bak
+*.old
+
+# Archivos exportados
+exports/
