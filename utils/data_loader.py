@@ -5,11 +5,24 @@ def load_data():
     
     # === 1. Oro principal (2004-2024) ===
     df = pd.read_csv("datasets/XAU_1d_data_2004_to_2024-09-20.csv", parse_dates=["Date"])
-    df = df.rename(columns={"Date": "Fecha", "Close": "Precio_Oro"})
+
+    # Renombrar y preparar índice
+    df = df.rename(columns={
+        "Date": "Fecha",
+        "Close": "Precio_Oro",
+        "Volume": "Volumen"  # Aseguramos que el nombre sea uniforme
+    })
+
+    # Convertir columna de volumen a numérico (por si acaso viene como texto)
+    df["Volumen"] = pd.to_numeric(df["Volumen"], errors="coerce")
+
+    # Establecer la fecha como índice
     df.set_index("Fecha", inplace=True)
+
 
     # === 2. Eventos macroeconómicos ===
     eventos_df = pd.read_csv("datasets/eventos_macroeconomicos.csv", parse_dates=["Fecha"])
+    
 
     # === 3. Dólar (Índice DXY) ===
     dolar_df = pd.read_csv("datasets/Datos_historicos_Indice_dolar.csv", parse_dates=["Fecha"], dayfirst=True)
