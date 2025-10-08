@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 from utils.data_loader import load_data
-from pages import market_trends, data_insights, custom_reports
+from bloques import market_trends, data_insights, custom_reports
 
 # Configuración de la app
 st.set_page_config(
@@ -19,12 +19,13 @@ def change_page(page_name):
     st.session_state.current_page = page_name
     st.rerun()
 
-# Cargar CSS
-with open("assets/style.css", "r") as f:
+
+with open("assets/style.css", encoding="utf-8") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+
 # Cargar datos
-df, eventos_df, dolar_df, df_oro_ext, df_btc = load_data()
+df, eventos_df, dolar_df, df_oro_ext, df_btc, df_plata, df_oro_eur, df_oro_cny, df_petroleo, df_cad, df_elecciones_usa, df_recesiones, df_crisis_europa, df_crisis_inmo,df_crisis_minerales,  cpi_df, df_oro_mensual, cci_df, fear_greed_df , df_walcl, pib_df = load_data()
 
 
 # Mostrar el encabezado con título y botón
@@ -44,7 +45,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Contenedor de cuadros clicables
-st.markdown("### Selecciona un análisis:")
+
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -63,7 +64,7 @@ with col3:
 if st.session_state.current_page == "market_trends":
     market_trends.show(df, eventos_df)
 elif st.session_state.current_page == "data_insights":
-    data_insights.show(df, eventos_df, dolar_df, df_oro_ext, df_btc)
+    data_insights.show(df, eventos_df, dolar_df, df_oro_ext, df_btc, df_plata, df_oro_eur, df_oro_cny, df_petroleo, df_cad, df_elecciones_usa, df_recesiones,df_crisis_europa,df_crisis_inmo, df_crisis_minerales, cpi_df, df_oro_mensual, cci_df,fear_greed_df, df_walcl,pib_df )
 elif st.session_state.current_page == "custom_reports":
     custom_reports.show(df, eventos_df)
 else:

@@ -156,5 +156,31 @@ body, [data-testid="stAppViewContainer"] {
     }
 }
 
+/* Botones de análisis grandes, cuadrados y centrados */
+.stButton > button {
+    background-color: #0d1221 !important;
+    color: white !important;
+    border: 3px solid #ff6600 !important;
+    border-radius: 10px !important;
+    padding: 20px 30px !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+    width: 300px !important;
+    height: 100px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-left: 90px !important; /* ⬅️ Mueve todo a la derecha */
+}
+
+.stButton > button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.5);
+    background-color: #1a1a1a !important;
+}
+
+
 
 >>>>>>> feature/dashboard-ui

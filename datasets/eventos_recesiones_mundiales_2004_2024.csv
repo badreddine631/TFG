@@ -1,0 +1,5 @@
+Nombre,Fecha_Inicio,Fecha_Fin,Duración (meses),Zona Geográfica,Causa Principal,Fuente
+Gran Recesión (EE.UU.),2007-12-01,2009-06-01,18,Estados Unidos,"Colapso del mercado inmobiliario y crisis de hipotecas subprime","NBER"
+Recesión COVID-19,2020-02-01,2020-04-01,2,Global,"Pandemia global de COVID-19","NBER, FMI"
+Recesión Técnica Alemania,2022-10-01,2023-06-01,8,Alemania / Zona Euro,"Inflación energética + guerra Ucrania + caída industrial","Destatis, Eurostat"
+Desaceleración EE.UU. Post-COVID,2022-01-01,2022-06-01,5,Estados Unidos,"Subida agresiva de tipos de interés por la FED","BEA (Oficina de Análisis Económico)"
