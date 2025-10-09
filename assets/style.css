@@ -1,186 +1,423 @@
-/* Fondo degradado para toda la aplicación */
-body, [data-testid="stAppViewContainer"] {
-    background: linear-gradient(180deg, #ff6600, #1a1a1a); /* Degradado de naranja a negro */
-    color: white;
+/* ======================
+   Streamlit Web3 Dashboard Theme
+   ====================== */
+
+:root {
+    --bg-primary: #0d1117;
+    --bg-secondary: rgba(16, 21, 30, 0.82);
+    --bg-card: rgba(28, 31, 38, 0.75);
+    --accent-1: #ff7a18;
+    --accent-2: #ffa600;
+    --accent-3: #8c54ff;
+    --text-primary: #ffffffcc;
+    --text-strong: #ffffffeb;
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --shadow-strong: 0 28px 60px -40px rgba(10, 12, 18, 0.8);
+    --shadow-soft: 0 12px 32px -20px rgba(12, 15, 25, 0.7);
+    --transition-fast: 150ms ease;
+    --transition-medium: 280ms ease;
+    font-family: "Poppins", "Inter", "Roboto", sans-serif;
+}
+
+body,
+[data-testid="stAppViewContainer"] {
+    background: radial-gradient(circle at 20% 20%, rgba(140, 84, 255, 0.16), transparent 40%),
+                radial-gradient(circle at 80% 0%, rgba(255, 122, 24, 0.18), transparent 42%),
+                radial-gradient(circle at 50% 80%, rgba(67, 217, 173, 0.12), transparent 45%),
+                var(--bg-primary);
+    color: var(--text-primary);
+    font-family: "Poppins", "Inter", "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
     margin: 0;
     padding: 0;
 }
 
-/* Ajustar la barra lateral */
+main,
+[data-testid="stAppViewContainer"] > .main {
+    padding-bottom: 3rem;
+}
+
+/* Layout containers */
+.block-container,
+.css-18e3th9 { /* legacy selector fallback */
+    background: var(--bg-card);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid var(--border-glass);
+    border-radius: 24px;
+    box-shadow: var(--shadow-strong);
+    padding: 2.5rem 3rem;
+    margin-top: 2.5rem;
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
+}
+
+.block-container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 28px 60px -30px rgba(255, 122, 24, 0.22);
+    border-color: rgba(255, 122, 24, 0.35);
+}
+
+/* Sidebar */
 [data-testid="stSidebar"] {
-    background-color: #232323;
+    background: linear-gradient(160deg, rgba(22, 27, 34, 0.92) 5%, rgba(13, 17, 23, 0.86) 60%, rgba(28, 31, 38, 0.92) 100%);
+    backdrop-filter: blur(12px) saturate(150%);
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-/* Ajuste del encabezado más arriba */
-.header {
-    background-color: #0d1221; /* Fondo negro azulado */
-    padding: 20px 40px;
-    border-bottom: 5px solid #ff6600; /* Línea naranja en la parte inferior */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 10px;
-
-    position: absolute; /* Mantenerlo en posición relativa al contenido */
-    top: -120px; /* Lo subimos más (antes estaba en 160px) */
-    left: 50%;
-    transform: translateX(-50%); /* Centrar horizontalmente */
-    width: 200%;
-    max-width: 1200px;
-    z-index: 1000;
+[data-testid="stSidebar"] * {
+    color: var(--text-primary) !important;
 }
 
-
-
-/* Ajustar la separación para que el contenido no quede oculto debajo del encabezado */
-[data-testid="stAppViewContainer"] {
-    padding-top: 90px; /* Espacio suficiente para el encabezado */
+/* Typography */
+.stMarkdown h1,
+.stMarkdown h2,
+.stMarkdown h3,
+.stMarkdown h4,
+.stMarkdown h5,
+.stMarkdown h6,
+[data-testid="stMarkdownContainer"] h1,
+[data-testid="stMarkdownContainer"] h2,
+[data-testid="stMarkdownContainer"] h3 {
+    font-family: "Poppins", "Inter", "Roboto", sans-serif;
+    color: var(--text-strong);
+    letter-spacing: 0.02em;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.35rem;
 }
 
-/* Estilo del título */
-.header h1 {
-    color: #ff6600;
-    font-size: 28px;
-    font-weight: bold;
-    margin: 0;
+.stMarkdown h1,
+[data-testid="stMarkdownContainer"] h1 {
+    font-size: clamp(2.5rem, 4vw, 3.25rem);
+    background: linear-gradient(120deg, #ffa600 0%, #ff7a18 40%, #8c54ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 12px 22px rgba(140, 84, 255, 0.12);
 }
 
-/* Estilo del botón Get Started */
-.get-started-btn {
-    background-color: #ff6600;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
+.stMarkdown h2,
+[data-testid="stMarkdownContainer"] h2 {
+    font-size: clamp(2rem, 3vw, 2.6rem);
 }
 
-.get-started-btn:hover {
-    background-color: #cc5200;
-}
-/* Contenedor del texto central */
-.center-content {
-    text-align: center;
-    padding: 40px 20px; /* Aumenta el padding para mover todo */
-    max-width: 800px;
-    margin: 30px auto 20px auto; /* Ajusta el margen superior para subir o bajar */
+.stMarkdown h3,
+[data-testid="stMarkdownContainer"] h3 {
+    font-size: clamp(1.6rem, 2.6vw, 2rem);
 }
 
-
-/* Título principal */
-.center-content h2 {
-    color: white;
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 10px;
+.stMarkdown h1::after,
+.stMarkdown h2::after,
+.stMarkdown h3::after,
+[data-testid="stMarkdownContainer"] h1::after,
+[data-testid="stMarkdownContainer"] h2::after,
+[data-testid="stMarkdownContainer"] h3::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 110%;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(255, 122, 24, 0.0), rgba(255, 166, 0, 0.75), rgba(140, 84, 255, 0.0));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 400ms ease;
 }
 
-/* Subtítulo */
-.center-content p {
-    color: #f0f0f0;
-    font-size: 18px;
-    margin-bottom: 20px;
+.stMarkdown h1:hover::after,
+.stMarkdown h2:hover::after,
+.stMarkdown h3:hover::after,
+[data-testid="stMarkdownContainer"] h1:hover::after,
+[data-testid="stMarkdownContainer"] h2:hover::after,
+[data-testid="stMarkdownContainer"] h3:hover::after {
+    transform: scaleX(1);
 }
 
-/* Botón "Explorar Nuestras Soluciones" */
-.explore-btn {
-    background-color: #ff6600;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
+/* Generic text */
+p,
+li,
+label,
+span,
+.stMarkdown,
+[data-testid="stMarkdownContainer"] {
+    color: var(--text-primary);
+    line-height: 1.65;
+    letter-spacing: 0.015em;
 }
 
-.explore-btn:hover {
-    background-color: #cc5200;
-}
-<<<<<<< HEAD
-=======
-
-/* Contenedor de los cuadros */
-.cards-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 40px;
-}
-
-/* Estilo de los cuadros clicables */
-.clickable-card {
-    background-color: #0d1221;
-    color: white;
-    padding: 20px;
-    width: 300px;
-    height: 180px;
-    border-radius: 10px;
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: pointer;
-    border: 3px solid #ff6600; /* Borde naranja */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.clickable-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.5);
-}
-
-/* Estilo de los títulos */
-.clickable-card h3 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-/* Estilo del texto dentro del cuadro */
-.clickable-card p {
-    font-size: 14px;
-    margin: 0;
-}
-
-/* Ajuste para que el texto no se deforme */
-@media (max-width: 900px) {
-    .cards-container {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-/* Botones de análisis grandes, cuadrados y centrados */
+/* Buttons */
 .stButton > button {
-    background-color: #0d1221 !important;
-    color: white !important;
-    border: 3px solid #ff6600 !important;
-    border-radius: 10px !important;
-    padding: 20px 30px !important;
-    font-size: 18px !important;
-    font-weight: bold !important;
-    transition: transform 0.2s, box-shadow 0.2s !important;
-    width: 300px !important;
-    height: 100px !important;
-    display: flex !important;
+    position: relative;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin-left: 90px !important; /* ⬅️ Mueve todo a la derecha */
+    gap: 0.45rem;
+    padding: 0.9rem 2.4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text-strong) !important;
+    background: linear-gradient(120deg, var(--accent-1), var(--accent-2), var(--accent-3));
+    background-size: 220% 220%;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 14px 30px -18px rgba(255, 122, 24, 0.65);
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium), background-position 400ms ease;
 }
 
 .stButton > button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(255, 102, 0, 0.5);
-    background-color: #1a1a1a !important;
+    transform: translateY(-3px) scale(1.01);
+    background-position: 90% 50%;
+    box-shadow: 0 18px 38px -16px rgba(140, 84, 255, 0.6);
 }
 
+.stButton > button:active {
+    transform: translateY(1px) scale(0.99);
+    box-shadow: 0 8px 18px -14px rgba(255, 122, 24, 0.7);
+}
 
+.stButton > button:focus-visible {
+    outline: 2px solid rgba(255, 166, 0, 0.55);
+    outline-offset: 3px;
+}
 
->>>>>>> feature/dashboard-ui
+/* Input elements */
+.stTextInput input,
+.stNumberInput input,
+.stSelectbox select,
+.stTextArea textarea,
+.stDateInput input,
+.stTimeInput input,
+.stSelectbox div[data-baseweb="select"] > div,
+.stMultiSelect div[data-baseweb="select"] > div {
+    background: rgba(13, 17, 23, 0.8);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.04);
+    color: var(--text-strong);
+    padding: 0.75rem 1rem;
+    transition: border-color var(--transition-medium), box-shadow var(--transition-medium), transform var(--transition-fast);
+}
+
+.stSelectbox div[data-baseweb="select"] > div {
+    padding: 0.55rem 0.9rem;
+}
+
+.stTextInput input:hover,
+.stNumberInput input:hover,
+.stSelectbox select:hover,
+.stTextArea textarea:hover,
+.stDateInput input:hover,
+.stTimeInput input:hover,
+.stSelectbox div[data-baseweb="select"] > div:hover,
+.stMultiSelect div[data-baseweb="select"] > div:hover {
+    border-color: rgba(255, 166, 0, 0.45);
+    box-shadow: 0 10px 30px -22px rgba(140, 84, 255, 0.6);
+}
+
+.stTextInput input:focus,
+.stNumberInput input:focus,
+.stSelectbox select:focus,
+.stTextArea textarea:focus,
+.stDateInput input:focus,
+.stTimeInput input:focus,
+.stSelectbox div[data-baseweb="select"] > div:focus,
+.stMultiSelect div[data-baseweb="select"] > div:focus {
+    border-color: rgba(140, 84, 255, 0.65);
+    box-shadow: 0 12px 36px -20px rgba(140, 84, 255, 0.7);
+    outline: none;
+}
+
+/* Slider */
+.stSlider > div[data-baseweb="slider"] > div {
+    padding: 1.6rem 0.1rem 0.6rem;
+}
+
+.stSlider [role="slider"] {
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px -12px rgba(140, 84, 255, 0.7);
+    width: 22px;
+    height: 22px;
+}
+
+.stSlider [data-baseweb="slider"] > div > div:first-child {
+    background: rgba(255, 166, 0, 0.35);
+    height: 5px;
+    border-radius: 999px;
+}
+
+.stSlider [data-baseweb="slider"] > div > div[role="presentation"] {
+    background: rgba(255, 255, 255, 0.08);
+    height: 5px;
+    border-radius: 999px;
+}
+
+/* Tabs */
+.stTabs [role="tablist"] {
+    gap: 0.5rem;
+}
+
+.stTabs button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 18px !important;
+    font-weight: 500;
+    background: rgba(13, 17, 23, 0.75) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-primary) !important;
+    transition: color var(--transition-medium), border-color var(--transition-medium), transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.stTabs button:hover {
+    color: var(--text-strong) !important;
+    border-color: rgba(255, 166, 0, 0.4) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px -24px rgba(140, 84, 255, 0.65);
+}
+
+.stTabs button[aria-selected="true"] {
+    background: linear-gradient(120deg, rgba(255, 122, 24, 0.32), rgba(140, 84, 255, 0.28)) !important;
+    border-color: rgba(255, 122, 24, 0.55) !important;
+    color: var(--text-strong) !important;
+}
+
+/* Metrics & cards */
+[data-testid="stMetric"] {
+    background: rgba(18, 24, 34, 0.8);
+    border-radius: 20px;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: var(--shadow-soft);
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
+}
+
+[data-testid="stMetric"]:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 166, 0, 0.35);
+    box-shadow: 0 22px 44px -32px rgba(255, 122, 24, 0.7);
+}
+
+/* Tables */
+[data-testid="stTable"] table {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+[data-testid="stTable"] table tbody tr {
+    background: rgba(13, 17, 23, 0.6);
+    transition: background var(--transition-medium);
+}
+
+[data-testid="stTable"] table tbody tr:hover {
+    background: rgba(255, 166, 0, 0.08);
+}
+
+[data-testid="stTable"] table thead tr {
+    background: linear-gradient(120deg, rgba(255, 122, 24, 0.25), rgba(140, 84, 255, 0.2));
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(13, 17, 23, 0.65);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(255, 122, 24, 0.85), rgba(140, 84, 255, 0.8));
+    border-radius: 999px;
+    border: 2px solid rgba(13, 17, 23, 0.8);
+    transition: background var(--transition-medium);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(140, 84, 255, 0.9), rgba(255, 166, 0, 0.88));
+}
+
+/* Animations */
+@keyframes floatPulse {
+    0%, 100% {
+        transform: translateY(0px) scale(1);
+        box-shadow: var(--shadow-soft);
+    }
+    50% {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 30px 60px -40px rgba(140, 84, 255, 0.75);
+    }
+}
+
+[data-testid="stMetric"]:hover,
+.stButton > button:hover {
+    animation: floatPulse 1.8s ease-in-out alternate;
+}
+
+/* Forms & checkboxes */
+.stCheckbox > label,
+.stRadio > label,
+.stSelectbox label,
+.stMultiSelect label {
+    font-weight: 500;
+    color: var(--text-strong);
+}
+
+.stRadio > div[role="radiogroup"] > label {
+    background: rgba(13, 17, 23, 0.75);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 0.6rem 1.1rem;
+    transition: border var(--transition-medium), transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.stRadio > div[role="radiogroup"] > label:hover {
+    border-color: rgba(255, 166, 0, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 34px -24px rgba(255, 122, 24, 0.6);
+}
+
+/* Footer */
+footer {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Responsive enhancements */
+@media (max-width: 992px) {
+    .block-container {
+        padding: 2rem 1.75rem;
+    }
+
+    .stButton > button {
+        width: 100%;
+        padding: 1rem 1.6rem;
+        font-size: 1.05rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .block-container {
+        padding: 1.6rem 1.25rem;
+        border-radius: 20px;
+    }
+
+    .stMarkdown h1,
+    [data-testid="stMarkdownContainer"] h1 {
+        font-size: clamp(2.2rem, 8vw, 2.6rem);
+    }
+
+    .stMarkdown h2,
+    [data-testid="stMarkdownContainer"] h2 {
+        font-size: clamp(1.8rem, 6.5vw, 2.1rem);
+    }
+
+    .stButton > button {
+        border-radius: 18px;
+    }
+
+    .stTextInput input,
+    .stNumberInput input,
+    .stSelectbox select,
+    .stTextArea textarea {
+        font-size: 1rem;
+    }
+}
